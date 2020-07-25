@@ -70,15 +70,15 @@ app.put("/unblock-key", (req, res) => {
   }
 });
 
-app.put("/refresh-key", (req, res) => {
+app.post("/refresh-key", (req, res) => {
   let key = req.body.key;
-  if (available[key]) {
+  if (available[key] === "") {
     const refreshTimeout = setTimeout(() => {
-      delete blocked[firstKey];
-      available[firstKey] = "";
+      delete blocked[key];
+      available[key] = "";
     }, 1000 * 60);
     const deleteTimeout = setTimeout(() => {
-      delete available[firstKey];
+      delete available[key];
     }, 5 * 1000 * 60);
     blocked[key] = {
       user: req.body.user,
@@ -86,6 +86,7 @@ app.put("/refresh-key", (req, res) => {
       refreshTimeout,
       deleteTimeout,
     };
+    delete available[key];
     res.status(200).json({
       Success: "Refresh successfull after the time",
     });
@@ -94,6 +95,18 @@ app.put("/refresh-key", (req, res) => {
     if (user === req.body.user) {
       clearTimeout(blocked[key].refreshTimeout);
       clearTimeout(blocked[key].deleteTimeout);
+      const refreshTimeout = setTimeout(() => {
+        delete blocked[key];
+        available[key] = "";
+      }, 1000 * 60);
+      const deleteTimeout = setTimeout(() => {
+        delete available[key];
+      }, 5 * 1000 * 60);
+      blocked[key] = {
+        user,
+        refreshTimeout,
+        deleteTimeout,
+      };
       res.status(200).json({
         Success: "Refresh successfull within the time",
       });
@@ -111,7 +124,7 @@ app.put("/refresh-key", (req, res) => {
 
 app.delete("/delete-key", (req, res) => {
   let key = req.body.key;
-  if (available[key]) {
+  if (available[key] === "") {
     delete available[key];
     res.status(200).json({
       success: `key ${key}`,
