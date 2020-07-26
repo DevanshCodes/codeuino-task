@@ -6,12 +6,12 @@ module.exports = (req, res) => {
   if (available[key] === "") {
     delete available[key];
     res.status(200).json({
-      success: `key ${key}`,
+      success: `${key}`,
     });
   } else if (blocked[key]) {
     delete blocked[key];
     res.status(200).json({
-      success: `key ${key}`,
+      success: `${key}`,
     });
   } else {
     res.status(400).json({

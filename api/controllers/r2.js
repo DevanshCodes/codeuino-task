@@ -23,7 +23,7 @@ module.exports = (req, res) => {
     };
     delete available[firstKey];
     res.status(200).json({
-      success: `Key ${firstKey}`,
+      success: `${firstKey}`,
     });
   }
 };

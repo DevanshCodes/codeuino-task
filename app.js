@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 var port_number = process.env.PORT || 4000;
-const server = app.listen(port_number);
 const controllerR1 = require("./api/controllers/r1");
 const controllerR2 = require("./api/controllers/r2");
 const controllerR3 = require("./api/controllers/r3");
