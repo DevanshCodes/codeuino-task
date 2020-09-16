@@ -12,7 +12,7 @@ describe("Delete Key", () => {
   });
   it("Should Get & Delete the Key", async () => {
     const response = await request(app).post("/get-key").send({
-      user: "randomNigga",
+      user: "random",
     });
     expect(response.statusCode).toBe(200);
     key = response.body.success;

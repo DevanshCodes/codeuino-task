@@ -12,17 +12,17 @@ describe("Unblock after 1 Minute", () => {
   });
   it("Unblocked for use again after 1 minute", async () => {
     const response = await request(app).post("/get-key").send({
-      user: "randomNigga",
+      user: "random",
     });
     expect(response.statusCode).toBe(200);
     const responsebefore1 = await request(app).post("/get-key").send({
-      user: "randomNigga",
+      user: "random",
     });
     expect(responsebefore1.statusCode).toBe(404);
 
     jest.advanceTimersByTime(1000 * 60 * 2);
     const responseafter1 = await request(app).post("/get-key").send({
-      user: "newNigga",
+      user: "new",
     });
     expect(responseafter1.statusCode).toBe(200);
   });
