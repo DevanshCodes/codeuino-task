@@ -17,7 +17,7 @@ describe("Refresh the Key Token", () => {
 
   it("Refresh the Key Token and key deleted after 5 minutes", async () => {
     const response = await request(app).post("/get-key").send({
-      user: "randomNigga",
+      user: "random",
     });
     expect(response.statusCode).toBe(200);
     key = response.body.success;
@@ -31,7 +31,7 @@ describe("Refresh the Key Token", () => {
     expect(setTimeout).toBeCalled();
 
     const responseRefresh = await request(app).post("/refresh-key").send({
-      user: "randomNigga",
+      user: "random",
       key: key,
     });
     expect(responseRefresh.statusCode).toBe(200);
@@ -45,7 +45,7 @@ describe("Refresh the Key Token", () => {
     expect(setTimeout).toBeCalled();
 
     const responseRefreshafter5 = await request(app).post("/refresh-key").send({
-      user: "randomNigga",
+      user: "random",
       key: key,
     });
     expect(responseRefreshafter5.statusCode).toBe(400);
